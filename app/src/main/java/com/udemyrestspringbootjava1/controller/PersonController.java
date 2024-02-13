@@ -33,4 +33,9 @@ public class PersonController {
     public void delete(@PathVariable(name = "id") String id){
         service.delete(id);
     }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Person update(@RequestBody Person requestBody){
+        return service.update(requestBody);
+    }
 }

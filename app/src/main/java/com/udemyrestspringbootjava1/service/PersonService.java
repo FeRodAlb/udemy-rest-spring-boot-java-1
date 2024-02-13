@@ -29,4 +29,12 @@ public class PersonService {
         Person person = repository.findById(Long.valueOf(id)).orElseThrow(IllegalArgumentException::new);
         repository.delete(person);
     }
+
+    public Person update(Person p){
+        Person person = repository.findById(p.getId()).orElseThrow(IllegalArgumentException::new);
+        person.setAddress(p.getAddress());
+        person.setFirstName(p.getFirstName());
+        person.setLastName(p.getLastName());
+        return repository.save(person);
+    }
 }
