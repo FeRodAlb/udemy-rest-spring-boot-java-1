@@ -1,10 +1,23 @@
 package com.udemyrestspringbootjava1.model;
 
-public class Person {
+import jakarta.persistence.*;
 
+import java.io.Serializable;
+
+@Entity
+public class Person implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "first_name", nullable = false, length = 30)
     private String firstName;
+
+    @Column(name="last_name", nullable = false, length = 30)
     private String lastName;
+
+    @Column(nullable = false, length = 100)
     private String address;
 
     public Long getId() {
