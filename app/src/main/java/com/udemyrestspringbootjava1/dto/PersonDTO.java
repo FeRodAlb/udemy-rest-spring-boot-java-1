@@ -1,8 +1,16 @@
 package com.udemyrestspringbootjava1.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"id", "first_name", "last_name", "address"})
 public class PersonDTO {
     private Long id;
+
+    @JsonProperty("first_name")
     private String firstName;
+
+    @JsonProperty("last_name")
     private String lastName;
     private String address;
 
