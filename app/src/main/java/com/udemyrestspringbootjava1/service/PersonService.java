@@ -1,5 +1,7 @@
 package com.udemyrestspringbootjava1.service;
 
+import com.udemyrestspringbootjava1.dto.PersonDTO;
+import com.udemyrestspringbootjava1.mapper.ObjectMapper;
 import com.udemyrestspringbootjava1.model.Person;
 import com.udemyrestspringbootjava1.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +15,18 @@ public class PersonService {
     @Autowired
     private PersonRepository repository;
 
-    public List<Person> findAll(){
-        return repository.findAll();
+    public List<PersonDTO> findAll(){
+        return ObjectMapper.parseListObjects(repository.findAll(), PersonDTO.class);
     }
 
-    public Person findById(String id){
-        return repository.findById(Long.valueOf(id)).orElseThrow(IllegalArgumentException::new);
+    public PersonDTO findById(String id){
+        var entity = repository.findById(Long.valueOf(id)).orElseThrow(IllegalArgumentException::new);
+        return ObjectMapper.parseObject(entity, PersonDTO.class);
     }
 
-    public Person create(Person p){
-        return repository.save(p);
+    public PersonDTO create(PersonDTO p){
+        var entity = ObjectMapper.parseObject(p, Person.class);
+        return ObjectMapper.parseObject(repository.save(entity), PersonDTO.class);
     }
 
     public void delete(String id){
@@ -30,11 +34,11 @@ public class PersonService {
         repository.delete(person);
     }
 
-    public Person update(Person p){
+    public PersonDTO update(PersonDTO p){
         Person person = repository.findById(p.getId()).orElseThrow(IllegalArgumentException::new);
         person.setAddress(p.getAddress());
         person.setFirstName(p.getFirstName());
         person.setLastName(p.getLastName());
-        return repository.save(person);
+        return ObjectMapper.parseObject(repository.save(person), PersonDTO.class);
     }
 }

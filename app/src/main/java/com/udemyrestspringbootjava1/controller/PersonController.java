@@ -1,6 +1,6 @@
 package com.udemyrestspringbootjava1.controller;
 
-import com.udemyrestspringbootjava1.model.Person;
+import com.udemyrestspringbootjava1.dto.PersonDTO;
 import com.udemyrestspringbootjava1.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,17 +16,17 @@ public class PersonController {
     private PersonService service;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Person> findAll(){
+    public List<PersonDTO> findAll(){
         return service.findAll();
     }
 
     @GetMapping(value = "/{id}")
-    public Person findById(@PathVariable("id") String personId){
+    public PersonDTO findById(@PathVariable("id") String personId){
         return service.findById(personId);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person create(@RequestBody Person requestBody){
+    public PersonDTO create(@RequestBody PersonDTO requestBody){
         return service.create(requestBody);
     }
     @DeleteMapping(value = "/{id}")
@@ -35,7 +35,7 @@ public class PersonController {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person update(@RequestBody Person requestBody){
+    public PersonDTO update(@RequestBody PersonDTO requestBody){
         return service.update(requestBody);
     }
 }
