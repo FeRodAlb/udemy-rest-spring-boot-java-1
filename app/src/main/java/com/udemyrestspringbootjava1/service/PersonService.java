@@ -1,6 +1,7 @@
 package com.udemyrestspringbootjava1.service;
 
 import com.udemyrestspringbootjava1.dto.PersonDTO;
+import com.udemyrestspringbootjava1.exception.ResourceNotFoundException;
 import com.udemyrestspringbootjava1.mapper.ObjectMapper;
 import com.udemyrestspringbootjava1.model.Person;
 import com.udemyrestspringbootjava1.repository.PersonRepository;
@@ -20,7 +21,8 @@ public class PersonService {
     }
 
     public PersonDTO findById(String id){
-        var entity = repository.findById(Long.valueOf(id)).orElseThrow(IllegalArgumentException::new);
+        var entity = repository.findById(Long.valueOf(id)).
+                orElseThrow(() -> new ResourceNotFoundException("Person ID not found"));
         return ObjectMapper.parseObject(entity, PersonDTO.class);
     }
 
