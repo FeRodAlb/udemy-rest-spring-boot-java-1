@@ -4,6 +4,7 @@ import com.udemyrestspringbootjava1.dto.PersonDTO;
 import com.udemyrestspringbootjava1.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,8 +33,9 @@ public class PersonController {
         return service.create(requestBody);
     }
     @DeleteMapping(value = "/{id}")
-    public void delete(@PathVariable(name = "id") String id){
+    public ResponseEntity<?> delete(@PathVariable(name = "id") String id){
         service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
