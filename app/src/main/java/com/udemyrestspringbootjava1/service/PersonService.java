@@ -32,12 +32,12 @@ public class PersonService {
     }
 
     public void delete(String id){
-        Person person = repository.findById(Long.valueOf(id)).orElseThrow(IllegalArgumentException::new);
+        Person person = repository.findById(Long.valueOf(id)).orElseThrow(() -> new ResourceNotFoundException("Person ID not found"));
         repository.delete(person);
     }
 
     public PersonDTO update(PersonDTO p){
-        Person person = repository.findById(p.getId()).orElseThrow(IllegalArgumentException::new);
+        Person person = repository.findById(p.getId()).orElseThrow(() -> new ResourceNotFoundException("Person ID not found"));
         person.setAddress(p.getAddress());
         person.setFirstName(p.getFirstName());
         person.setLastName(p.getLastName());
