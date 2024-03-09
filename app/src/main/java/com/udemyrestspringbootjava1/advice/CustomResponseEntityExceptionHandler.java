@@ -4,8 +4,8 @@ package com.udemyrestspringbootjava1.advice;
 import com.udemyrestspringbootjava1.exception.ExceptionResponse;
 import com.udemyrestspringbootjava1.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -25,6 +25,12 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request){
         ExceptionResponse response = new ExceptionResponse(HttpStatus.NOT_FOUND, LocalDateTime.now(), ex.getMessage());
 
+        return new ResponseEntity<>(response, response.getStatusCode());
+    }
+
+    @ExceptionHandler({AuthenticationException.class})
+    public ResponseEntity<Object> handleAuthenticationException(AuthenticationException ex, WebRequest request){
+        ExceptionResponse response = new ExceptionResponse(HttpStatus.UNAUTHORIZED, LocalDateTime.now(), ex.getMessage());
         return new ResponseEntity<>(response, response.getStatusCode());
     }
 
